@@ -1,0 +1,175 @@
+{{extend 'layout.html'}}
+<!-- INTESTAZIONE -->
+<div class="container-fluid well">
+  <div class="row">
+    <div class="col-md-3 text-left" >Catalogo prestazioni Online <br> <h4>{{=anal.analita}}</h4>
+    <small><p>
+        <a href="{{=URL('default', 'scheda_esami_print', args=[anal.id])}}" target="_blank">versione stampabile</a>
+        <span class="glyphicon glyphicon-print" aria-hidden="true"></span></p></small>
+
+    </div>
+    <div class="col-md-6 text-center">
+        <strong>Dipartimento di medicina di laboratorio</strong><br>
+        UO {{=uo.descrizione}}<br>
+        <small>Direttore: {{=uo.responsabile}}</small>
+     </div>
+    <div class="col-md-3 text-right">
+        <h3><small>
+        Scheda n°{{=anal.id}}<br>
+        Revisione: {{=anal.numero_revisione}} del {{=anal.modified_on}}
+        </small></h3>
+
+
+    </div>
+  </div>
+</div>
+
+<!-- SEGNALAZIONE DI NON PIU' ESEGUITO -->
+
+{{if anal.obsoleto==True:}}
+<div class="container-fluid well">
+
+    <div class="panel panel-danger">
+            <div class="panel-heading"><strong>Attenzione prestazione  non più eseguita</strong></div>
+             <div class="panel-body">
+                 <p>La prestazione {{=anal.analita}} non viene più eseguita</p>
+
+             </div>
+        </div>
+
+</div>
+{{pass}}
+
+
+
+<!-- PANNELLI IMPORTANTI SEMPRE VISIBILI -->
+<div class="container-fluid well">
+  <div class="row">
+
+      <div class="col-md-4">
+        <div class="panel panel-primary">
+            <div class="panel-heading">{{=mat.sigla}} - {{=anal.analita}}</div>
+             <div class="panel-body">
+                 {{=T('Sample material')}}: {{=mat.materiale}}<br>
+                 {{=T('Container')}}: {{=cont.contenitore}} - {{=A('Dettaglio', _href=URL('view_container',args=cont.id))}}
+
+             </div>
+        </div>
+    </div>
+
+  <div class="col-md-4">
+        <div class="panel panel-info">
+            <div class="panel-heading">Preparazione del paziente</div>
+             <div class="panel-body">
+             {{=XML(anal.preparazione_paziente, sanitize=False)}}
+             {{if anal.raccolta:}}
+                    <p>Modalità di raccolta: {{=XML(anal.raccolta, sanitize=False)}}</p>
+                {{pass}}
+
+              {{if anal.interferenze:}}
+                    <p>Interferenze: {{=XML(anal.interferenze, sanitize=False)}}</p>
+                {{pass}}
+
+             </div>
+        </div>
+    </div>
+
+  <div class="col-md-4">
+        <div class="panel panel-info">
+            <div class="panel-heading">Trasporto-conservazione del campione</div>
+                <div class="panel-body">
+                {{if anal.conservazione:}}
+                    <p>Modalità di conservazione: {{=XML(anal.conservazione, sanitize=False)}}</p>
+                {{pass}}
+             {{if anal.trasporto:}}
+                <p>Modalità di trasporto: {{=XML(anal.trasporto, sanitize=False)}}</p>
+             {{pass}}
+              {{if anal.moduli_richiesta:}}
+                <p> <a href='{{=URL(f='download', args=anal.moduli_richiesta)}}'>Modulo cartaceo di richiesta</a</p>
+             {{pass}}
+
+
+
+
+             </div>
+        </div>
+    </div>
+  </div>
+  </div>
+
+
+<!-- PANNELLI A SCELTA -->
+
+<div class="well">
+
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#home">Valori di riferimento</a></li>
+    <li ><a data-toggle="tab" href="#menu1">Interpretazione</a></li>
+    <li><a data-toggle="tab" href="#menu2">Esecuzione</a></li>
+    <li><a data-toggle="tab" href="#menu3">Altre Info</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="home" class="tab-pane fade in active">
+        {{if anal.unita_misura:}}
+                    <small><br><p>Unità di misura: {{=XML(anal.unita_misura, sanitize=False)}}</p></small>
+        {{pass}}
+        <p>{{=XML(anal.riferimento, sanitize=False)}}</p>
+
+    </div>
+    <div id="menu1" class="tab-pane fade">
+        <p>{{=XML(anal.interpretazione, sanitize=False)}}</p>
+    </div>
+    <div id="menu2" class="tab-pane fade">
+      <br>Eseguibile in urgenza: {{if anal.eseguibile_urgenza:}}si{{else:}}no{{pass}}
+      <br>Eseguibile in routine: {{if anal.eseguibile_routine:}}si{{else:}}no{{pass}}
+      <br>Eseguibile per pazienti esterni: {{if anal.eseguibile_esterni:}}si{{else:}}no{{pass}}
+      <br>Necessaria la prenotazione: {{if anal.prenotazione:}}si{{else:}}no{{pass}}
+      <br>Eseguito in service: {{if anal.service:}}si{{else:}}no{{pass}}
+      <br> Tempo di refertazione in routine: {{=anal.tempo_refertazione}} {{=anal.udm_tempo_attesa}}
+      {{if anal.eseguibile_urgenza:}}
+        <br> Tempo di refertazione in urgenza: {{=anal.tempo_refertazione_urgenza}} min.
+      {{pass}}
+      {{if anal.giorni_effettuazione:}}
+        <br> Frequenza di esecuzione: {{=anal.giorni_effettuazione}}
+      {{pass}}
+      {{if anal.volume_minimo:}}
+        <br> Volume minimo per l'esecuzione: {{=anal.volume_minimo}}
+      {{pass}}
+
+      {{if met.metodo:}}
+        <br> Metodo di esecuzione: {{=met.metodo}}
+      {{pass}}
+      {{if anal.veq:}}
+        <br> VEQ effettuate: {{=XML(anal.veq)}}
+      {{pass}}
+      {{if anal.note:}}
+        <br> Note: {{=XML(anal.note)}}
+      {{pass}}
+
+    </div>
+    <div id="menu3" class="tab-pane fade">
+       <br>Settore di appartenenza: {{ if anal.id_settore:}}{{=sett.settore}}{{pass}}
+        {{if anal.codice_metafora:}}
+        <br> Codice analisi database Dedalus: {{=anal.codice_metafora}}
+        {{pass}}
+        {{if anal.codice_DM:}}
+        <br> Codice nomenclatore aziendale: {{=anal.codice_DM}}
+      {{pass}}
+      {{if anal.tariffa_DM:}}
+        <br> Tariffa nomenclatore aziendale: {{=anal.tariffa_DM}}
+      {{pass}}
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<p></p>
+<!--
+{{=BEAUTIFY(response._vars)}}
+-->

@@ -1,0 +1,162 @@
+--nome vecchio db=old_catalog
+
+CREATE TABLE old_catalog.materiali AS SELECT * FROM catalogo.materiali;
+CREATE TABLE old_catalog.metodi AS SELECT * FROM catalogo.metodi;
+CREATE TABLE old_catalog.unitaoperativa AS SELECT * FROM catalogo.unitaoperativa;
+CREATE TABLE old_catalog.provette AS SELECT * FROM catalogo.provette;
+CREATE TABLE old_catalog.settori AS SELECT * FROM catalogo.settori;
+
+
+
+-- aggiorno i settori nel vecchio db
+
+UPDATE `old_catalog`.`settori` SET `ID_Settore` = 1 WHERE `ID_Settore` = 543;
+UPDATE `old_catalog`.`settori` SET `ID_Settore` = 2 WHERE `ID_Settore` = 544;
+UPDATE `old_catalog`.`settori` SET `ID_Settore` = 3 WHERE `ID_Settore` = 545;
+UPDATE `old_catalog`.`settori` SET `ID_Settore` = 4 WHERE `ID_Settore` = 5482;
+UPDATE `old_catalog`.`settori` SET `ID_Settore` = 5 WHERE `ID_Settore` = 548;
+UPDATE `old_catalog`.`settori` SET `ID_Settore` = 6 WHERE `ID_Settore` = 549;
+UPDATE `old_catalog`.`settori` SET `ID_Settore` = 7 WHERE `ID_Settore` = 5494;
+UPDATE `old_catalog`.`settori` SET `ID_Settore` = 8 WHERE `ID_Settore` = 5467;
+UPDATE `old_catalog`.`settori` SET `ID_Settore` = 9 WHERE `ID_Settore` = 5592;
+UPDATE `old_catalog`.`settori` SET `ID_Settore` = 10 WHERE `ID_Settore` = 5484;
+UPDATE `old_catalog`.`settori` SET `ID_Settore` = 11 WHERE `ID_Settore` = 5483;
+UPDATE `old_catalog`.`settori` SET `ID_Settore` = 12 WHERE `ID_Settore` = 5491;
+UPDATE `old_catalog`.`settori` SET `ID_Settore` = 13 WHERE `ID_Settore` = 100;
+UPDATE `old_catalog`.`settori` SET `ID_Settore` = 14 WHERE `ID_Settore` = 5493;
+UPDATE `old_catalog`.`settori` SET `ID_Settore` = 15 WHERE `ID_Settore` = 5490;
+UPDATE `old_catalog`.`settori` SET `ID_Settore` = 16 WHERE `ID_Settore` = 560;
+UPDATE `old_catalog`.`settori` SET `ID_Settore` = 17 WHERE `ID_Settore` = 5487;
+UPDATE `old_catalog`.`settori` SET `ID_Settore` = 18 WHERE `ID_Settore` = 5495;
+UPDATE `old_catalog`.`settori` SET `ID_Settore` = 20 WHERE `ID_Settore` = 546;
+UPDATE `old_catalog`.`settori` SET `ID_Settore` = 21 WHERE `ID_Settore` = 547;
+UPDATE `old_catalog`.`settori` SET `ID_Settore` = 22 WHERE `ID_Settore` = 5462;
+UPDATE `old_catalog`.`settori` SET `ID_Settore` = 23 WHERE `ID_Settore` = 5488;
+UPDATE `old_catalog`.`settori` SET `ID_Settore` = 24 WHERE `ID_Settore` = 5492;
+UPDATE `old_catalog`.`settori` SET `ID_Settore` = 25 WHERE `ID_Settore` = 5486;
+UPDATE `old_catalog`.`settori` SET `ID_Settore` = 26 WHERE `ID_Settore` = 5489;
+UPDATE `old_catalog`.`esami` SET `ID_Settore` = 1 WHERE `ID_Settore` = 543;
+UPDATE `old_catalog`.`esami` SET `ID_Settore` = 2 WHERE `ID_Settore` = 544;
+UPDATE `old_catalog`.`esami` SET `ID_Settore` = 3 WHERE `ID_Settore` = 545;
+UPDATE `old_catalog`.`esami` SET `ID_Settore` = 4 WHERE `ID_Settore` = 5482;
+UPDATE `old_catalog`.`esami` SET `ID_Settore` = 5 WHERE `ID_Settore` = 548;
+UPDATE `old_catalog`.`esami` SET `ID_Settore` = 6 WHERE `ID_Settore` = 549;
+UPDATE `old_catalog`.`esami` SET `ID_Settore` = 7 WHERE `ID_Settore` = 5494;
+UPDATE `old_catalog`.`esami` SET `ID_Settore` = 8 WHERE `ID_Settore` = 5467;
+UPDATE `old_catalog`.`esami` SET `ID_Settore` = 9 WHERE `ID_Settore` = 5592;
+UPDATE `old_catalog`.`esami` SET `ID_Settore` = 10 WHERE `ID_Settore` = 5484;
+UPDATE `old_catalog`.`esami` SET `ID_Settore` = 11 WHERE `ID_Settore` = 5483;
+UPDATE `old_catalog`.`esami` SET `ID_Settore` = 12 WHERE `ID_Settore` = 5491;
+UPDATE `old_catalog`.`esami` SET `ID_Settore` = 13 WHERE `ID_Settore` = 100;
+UPDATE `old_catalog`.`esami` SET `ID_Settore` = 14 WHERE `ID_Settore` = 5493;
+UPDATE `old_catalog`.`esami` SET `ID_Settore` = 15 WHERE `ID_Settore` = 5490;
+UPDATE `old_catalog`.`esami` SET `ID_Settore` = 16 WHERE `ID_Settore` = 560;
+UPDATE `old_catalog`.`esami` SET `ID_Settore` = 17 WHERE `ID_Settore` = 5487;
+UPDATE `old_catalog`.`esami` SET `ID_Settore` = 18 WHERE `ID_Settore` = 5495;
+UPDATE `old_catalog`.`esami` SET `ID_Settore` = 20 WHERE `ID_Settore` = 546;
+UPDATE `old_catalog`.`esami` SET `ID_Settore` = 21 WHERE `ID_Settore` = 547;
+UPDATE `old_catalog`.`esami` SET `ID_Settore` = 22 WHERE `ID_Settore` = 5462;
+UPDATE `old_catalog`.`esami` SET `ID_Settore` = 23 WHERE `ID_Settore` = 5488;
+UPDATE `old_catalog`.`esami` SET `ID_Settore` = 24 WHERE `ID_Settore` = 5492;
+UPDATE `old_catalog`.`esami` SET `ID_Settore` = 25 WHERE `ID_Settore` = 5486;
+UPDATE `old_catalog`.`esami` SET `ID_Settore` = 26 WHERE `ID_Settore` = 5489;
+
+
+
+--unità operativa   
+--Truncate  tests_catalog.unitaoperativa
+INSERT IGNORE  INTO tests_catalog.unitaoperativa(id,descrizione,responsabile)
+SELECT ID_unitaoperativa,unitaoperativa,responsabile FROM old_catalog.unitaoperativa;
+
+
+--Materiali
+INSERT IGNORE  INTO tests_catalog.materiali(id,materiale,sigla,id_unitaoperativa)
+SELECT ID_Materiale,materiale,sigla,ID_unitaoperativa FROM old_catalog.materiali;
+
+--Metodi
+INSERT IGNORE  INTO tests_catalog.metodi(id,metodo,id_unitaoperativa)
+SELECT ID_Metodo,Metodo,ID_unitaoperativa FROM old_catalog.metodi;
+
+--Provette
+INSERT IGNORE  INTO tests_catalog.contenitori(id,contenitore,id_unitaoperativa)
+SELECT ID_Provetta,Provetta,ID_unitaoperativa FROM old_catalog.provette;
+
+-- Settori
+INSERT IGNORE  INTO tests_catalog.settori(id,settore,responsabile,sos_responsabile,telefono,id_unitaoperativa)
+SELECT ID_settore,Settore,Responsabile,Sos_Responsabile,telefono,ID_unitaoperativa FROM old_catalog.settori;
+
+--esami
+INSERT IGNORE INTO `tests_catalog`.`esami`
+(`id`,
+`analita`,
+`search_keywords`,
+`attivo`,
+`id_unitaoperativa`,
+`id_materiali`,
+`id_contenitore`,
+`id_metodo`,
+`id_settore`,
+`codice_metafora`,
+`codice_DM`,
+`tariffa_DM`,
+`eseguibile_urgenza`,
+`eseguibile_routine`,
+`eseguibile_esterni`,
+`prenotazione`,
+`service`,
+`obsoleto`,
+`preparazione_paziente`,
+`raccolta`,
+`volume_minimo`,
+`trasporto`,
+`unita_misura`,
+`riferimento`,
+`interpretazione`,
+`interferenze`,
+`giorni_effettuazione`,
+`udm_tempo_attesa`,
+`tempo_refertazione`,
+`tempo_refertazione_urgenza`,
+`conservazione`,
+`veq`,
+`note`,
+`numero_revisione`
+)
+
+SELECT `esami`.`ID_Analita`,
+		`esami`.`Analita`,
+		`esami`.`Alias`,
+		`esami`.`Attivo`,
+		`esami`.`ID_unitaoperativa`,
+		`esami`.`ID_Materiale`,
+		`esami`.`ID_Provetta`,
+		`esami`.`ID_Metodo`,
+		`esami`.`ID_Settore`,
+		`esami`.`Codice_Metafora`,
+		`esami`.`Codice_DM`,
+		`esami`.`Tariffa_DM`,
+		`esami`.`urgenza`,
+		`esami`.`routine`,
+		`esami`.`esterni`,
+		`esami`.`Prenotazione`,
+		`esami`.`Service`,
+		`esami`.`obsoleto`,
+		`esami`.`Prep_Pazi`,
+		`esami`.`Raccolta`,
+		`esami`.`volmin`,
+		`esami`.`Trasporto`,
+		`esami`.`Unita_Misura`,
+		`esami`.`Riferimento`,
+		`esami`.`Interpretazione`,
+		`esami`.`Interferenze`,
+		`esami`.`Effettuazione`,
+		`esami`.`udm_attesa`,
+		`esami`.`Refertazione`,
+		`esami`.`t_ref_urg`,
+		`esami`.`fatt_serica`,
+		`esami`.`VEQ`,
+		`esami`.`Note`,
+		`esami`.`n_revisione`		 
+FROM `old_catalog`.`esami`;
+
+

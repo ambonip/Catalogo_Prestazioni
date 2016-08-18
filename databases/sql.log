@@ -1,0 +1,657 @@
+timestamp: 2016-01-10T10:34:11.027000
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512)
+);
+success!
+timestamp: 2016-01-10T10:34:11.093000
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2016-01-10T10:34:11.175000
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-01-10T10:34:11.243000
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  ,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2016-01-10T10:34:11.302000
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2016-01-10T10:34:11.358000
+CREATE TABLE auth_cas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    created_on TIMESTAMP,
+    service CHAR(512),
+    ticket CHAR(512),
+    renew CHAR(1)
+);
+success!
+timestamp: 2016-01-10T10:42:25.042000
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2016-01-10T10:42:26.478000
+CREATE TABLE auth_group(
+    id INT AUTO_INCREMENT NOT NULL,
+    role VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2016-01-10T10:42:26.969000
+CREATE TABLE auth_membership(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2016-01-10T10:42:27.476000
+CREATE TABLE auth_permission(
+    id INT AUTO_INCREMENT NOT NULL,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    table_name VARCHAR(512),
+    record_id INT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2016-01-10T10:42:27.995000
+CREATE TABLE auth_event(
+    id INT AUTO_INCREMENT NOT NULL,
+    time_stamp DATETIME,
+    client_ip VARCHAR(512),
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    origin VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2016-01-10T10:42:28.435000
+CREATE TABLE auth_cas(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    created_on DATETIME,
+    service VARCHAR(512),
+    ticket VARCHAR(512),
+    renew CHAR(1),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2016-01-18T13:38:42.692000
+ALTER TABLE auth_user ADD username VARCHAR(128);
+success!
+timestamp: 2016-01-18T13:38:43.955000
+ALTER TABLE auth_user ADD id_unitaoperativa INT;
+success!
+success!
+timestamp: 2016-01-18T13:38:44.321000
+ALTER TABLE auth_group ADD id_unitaoperativa INT;
+success!
+success!
+timestamp: 2016-01-18T13:38:44.916000
+CREATE TABLE local_file(
+    id INT AUTO_INCREMENT NOT NULL,
+    file_name VARCHAR(512),
+    description LONGTEXT,
+    funct VARCHAR(512),
+    enabled CHAR(1),
+    tipo LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2016-01-18T13:38:45.168000
+CREATE TABLE unitaoperativa(
+    id INT AUTO_INCREMENT NOT NULL,
+    descrizione VARCHAR(255),
+    responsabile VARCHAR(512),
+    is_active CHAR(1),
+    created_on DATETIME,
+    created_by INT  , INDEX created_by__idx (created_by), FOREIGN KEY (created_by) REFERENCES auth_user (id) ON DELETE CASCADE,
+    modified_on DATETIME,
+    modified_by INT  , INDEX modified_by__idx (modified_by), FOREIGN KEY (modified_by) REFERENCES auth_user (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2016-01-18T13:38:45.419000
+CREATE TABLE materiali(
+    id INT AUTO_INCREMENT NOT NULL,
+    materiale VARCHAR(512),
+    sigla VARCHAR(512),
+    id_unitaoperativa INT  , INDEX id_unitaoperativa__idx (id_unitaoperativa), FOREIGN KEY (id_unitaoperativa) REFERENCES unitaoperativa (id) ON DELETE CASCADE,
+    is_active CHAR(1),
+    created_on DATETIME,
+    created_by INT  , INDEX created_by__idx (created_by), FOREIGN KEY (created_by) REFERENCES auth_user (id) ON DELETE CASCADE,
+    modified_on DATETIME,
+    modified_by INT  , INDEX modified_by__idx (modified_by), FOREIGN KEY (modified_by) REFERENCES auth_user (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2016-01-18T13:38:45.776000
+CREATE TABLE metodi(
+    id INT AUTO_INCREMENT NOT NULL,
+    metodo VARCHAR(512),
+    id_unitaoperativa INT  , INDEX id_unitaoperativa__idx (id_unitaoperativa), FOREIGN KEY (id_unitaoperativa) REFERENCES unitaoperativa (id) ON DELETE CASCADE,
+    is_active CHAR(1),
+    created_on DATETIME,
+    created_by INT  , INDEX created_by__idx (created_by), FOREIGN KEY (created_by) REFERENCES auth_user (id) ON DELETE CASCADE,
+    modified_on DATETIME,
+    modified_by INT  , INDEX modified_by__idx (modified_by), FOREIGN KEY (modified_by) REFERENCES auth_user (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2016-01-18T13:38:45.994000
+CREATE TABLE contenitori(
+    id INT AUTO_INCREMENT NOT NULL,
+    contenitore VARCHAR(512),
+    immagine VARCHAR(512),
+    id_unitaoperativa INT  , INDEX id_unitaoperativa__idx (id_unitaoperativa), FOREIGN KEY (id_unitaoperativa) REFERENCES unitaoperativa (id) ON DELETE CASCADE,
+    is_active CHAR(1),
+    created_on DATETIME,
+    created_by INT  , INDEX created_by__idx (created_by), FOREIGN KEY (created_by) REFERENCES auth_user (id) ON DELETE CASCADE,
+    modified_on DATETIME,
+    modified_by INT  , INDEX modified_by__idx (modified_by), FOREIGN KEY (modified_by) REFERENCES auth_user (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2016-01-18T13:38:46.214000
+CREATE TABLE settori(
+    id INT AUTO_INCREMENT NOT NULL,
+    settore VARCHAR(512),
+    responsabile VARCHAR(512),
+    sos_responsabile VARCHAR(512),
+    telefono VARCHAR(512),
+    mail VARCHAR(512),
+    id_unitaoperativa INT  , INDEX id_unitaoperativa__idx (id_unitaoperativa), FOREIGN KEY (id_unitaoperativa) REFERENCES unitaoperativa (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2016-01-18T13:46:57.061000
+CREATE TABLE esami(
+    id INT AUTO_INCREMENT NOT NULL,
+    attivo CHAR(1),
+    id_materiali INT  , INDEX id_materiali__idx (id_materiali), FOREIGN KEY (id_materiali) REFERENCES materiali (id) ON DELETE CASCADE,
+    id_contenitore INT  , INDEX id_contenitore__idx (id_contenitore), FOREIGN KEY (id_contenitore) REFERENCES contenitori (id) ON DELETE CASCADE,
+    id_metodo INT  , INDEX id_metodo__idx (id_metodo), FOREIGN KEY (id_metodo) REFERENCES metodi (id) ON DELETE CASCADE,
+    id_settore INT  , INDEX id_settore__idx (id_settore), FOREIGN KEY (id_settore) REFERENCES settori (id) ON DELETE CASCADE,
+    id_unitaoperativa INT  , INDEX id_unitaoperativa__idx (id_unitaoperativa), FOREIGN KEY (id_unitaoperativa) REFERENCES unitaoperativa (id) ON DELETE CASCADE,
+    analita VARCHAR(512),
+    preparazione_paziente LONGTEXT,
+    raccolta LONGTEXT,
+    trasporto LONGTEXT,
+    unita_misura VARCHAR(512),
+    riferimento LONGTEXT,
+    giorni_effettuazione VARCHAR(512),
+    tempo_refertazione VARCHAR(512),
+    tempo_refertazione_urgenza VARCHAR(512),
+    interferenze LONGTEXT,
+    interpretazione LONGTEXT,
+    note LONGTEXT,
+    codice_DM VARCHAR(512),
+    search_keywords VARCHAR(512),
+    codice_metafora VARCHAR(512),
+    tariffa_DM VARCHAR(512),
+    volume_minimo VARCHAR(512),
+    numero_revisione VARCHAR(512),
+    udm_tempo_attesa VARCHAR(512),
+    moduli_richiesta VARCHAR(512),
+    conservazione LONGTEXT,
+    eseguibile_urgenza CHAR(1),
+    eseguibile_routine CHAR(1),
+    eseguibile_esterni CHAR(1),
+    prenotazione CHAR(1),
+    service CHAR(1),
+    obsoleto CHAR(1),
+    veq LONGTEXT,
+    is_active CHAR(1),
+    created_on DATETIME,
+    created_by INT  , INDEX created_by__idx (created_by), FOREIGN KEY (created_by) REFERENCES auth_user (id) ON DELETE CASCADE,
+    modified_on DATETIME,
+    modified_by INT  , INDEX modified_by__idx (modified_by), FOREIGN KEY (modified_by) REFERENCES auth_user (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2016-01-18T14:00:03.175000
+CREATE TABLE cfg_gen(
+    id INT AUTO_INCREMENT NOT NULL,
+    funct VARCHAR(255),
+    valore LONGTEXT,
+    description LONGTEXT,
+    is_active CHAR(1),
+    created_on DATETIME,
+    created_by INT  , INDEX created_by__idx (created_by), FOREIGN KEY (created_by) REFERENCES auth_user (id) ON DELETE CASCADE,
+    modified_on DATETIME,
+    modified_by INT  , INDEX modified_by__idx (modified_by), FOREIGN KEY (modified_by) REFERENCES auth_user (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2016-01-20T11:56:41.108000
+ALTER TABLE unitaoperativa DROP COLUMN modified_by;
+timestamp: 2016-01-20T11:59:18.015000
+ALTER TABLE unitaoperativa DROP COLUMN modified_by;
+timestamp: 2016-01-20T12:00:11.491000
+ALTER TABLE unitaoperativa DROP COLUMN modified_by;
+timestamp: 2016-01-20T12:00:27.846000
+ALTER TABLE unitaoperativa DROP COLUMN modified_by;
+timestamp: 2016-01-20T12:03:31.858000
+ALTER TABLE unitaoperativa DROP COLUMN modified_by;
+timestamp: 2016-01-20T12:04:50.894000
+ALTER TABLE unitaoperativa DROP COLUMN modified_by;
+timestamp: 2016-01-20T12:04:50.954000
+ALTER TABLE unitaoperativa DROP COLUMN modified_by;
+timestamp: 2016-01-20T12:05:29.080000
+ALTER TABLE unitaoperativa DROP COLUMN modified_by;
+timestamp: 2016-01-20T12:11:32.013000
+CREATE TABLE unitaoperativa(
+    id INT AUTO_INCREMENT NOT NULL,
+    descrizione VARCHAR(255),
+    responsabile VARCHAR(512),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2016-01-20T12:11:32.426000
+CREATE TABLE auth_user(
+    id INT AUTO_INCREMENT NOT NULL,
+    first_name VARCHAR(128),
+    last_name VARCHAR(128),
+    email VARCHAR(512),
+    username VARCHAR(128),
+    password VARCHAR(512),
+    registration_key VARCHAR(512),
+    reset_password_key VARCHAR(512),
+    registration_id VARCHAR(512),
+    id_unitaoperativa INT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2016-01-20T12:11:32.621000
+CREATE TABLE auth_group(
+    id INT AUTO_INCREMENT NOT NULL,
+    role VARCHAR(512),
+    description LONGTEXT,
+    id_unitaoperativa INT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2016-01-20T12:11:32.796000
+CREATE TABLE auth_membership(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2016-01-20T12:11:33.120000
+CREATE TABLE auth_permission(
+    id INT AUTO_INCREMENT NOT NULL,
+    group_id INT  , INDEX group_id__idx (group_id), FOREIGN KEY (group_id) REFERENCES auth_group (id) ON DELETE CASCADE,
+    name VARCHAR(512),
+    table_name VARCHAR(512),
+    record_id INT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2016-01-20T12:11:33.302000
+CREATE TABLE auth_event(
+    id INT AUTO_INCREMENT NOT NULL,
+    time_stamp DATETIME,
+    client_ip VARCHAR(512),
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    origin VARCHAR(512),
+    description LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2016-01-20T12:11:33.532000
+CREATE TABLE auth_cas(
+    id INT AUTO_INCREMENT NOT NULL,
+    user_id INT  , INDEX user_id__idx (user_id), FOREIGN KEY (user_id) REFERENCES auth_user (id) ON DELETE CASCADE,
+    created_on DATETIME,
+    service VARCHAR(512),
+    ticket VARCHAR(512),
+    renew CHAR(1),
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2016-01-20T12:11:33.712000
+CREATE TABLE local_file(
+    id INT AUTO_INCREMENT NOT NULL,
+    file_name VARCHAR(512),
+    description LONGTEXT,
+    funct VARCHAR(512),
+    enabled CHAR(1),
+    tipo LONGTEXT,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2016-01-20T12:11:33.938000
+CREATE TABLE materiali(
+    id INT AUTO_INCREMENT NOT NULL,
+    materiale VARCHAR(512),
+    sigla VARCHAR(512),
+    id_unitaoperativa INT  , INDEX id_unitaoperativa__idx (id_unitaoperativa), FOREIGN KEY (id_unitaoperativa) REFERENCES unitaoperativa (id) ON DELETE CASCADE,
+    is_active CHAR(1),
+    created_on DATETIME,
+    created_by INT  , INDEX created_by__idx (created_by), FOREIGN KEY (created_by) REFERENCES auth_user (id) ON DELETE CASCADE,
+    modified_on DATETIME,
+    modified_by INT  , INDEX modified_by__idx (modified_by), FOREIGN KEY (modified_by) REFERENCES auth_user (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2016-01-20T12:11:34.121000
+CREATE TABLE metodi(
+    id INT AUTO_INCREMENT NOT NULL,
+    metodo VARCHAR(512),
+    id_unitaoperativa INT  , INDEX id_unitaoperativa__idx (id_unitaoperativa), FOREIGN KEY (id_unitaoperativa) REFERENCES unitaoperativa (id) ON DELETE CASCADE,
+    is_active CHAR(1),
+    created_on DATETIME,
+    created_by INT  , INDEX created_by__idx (created_by), FOREIGN KEY (created_by) REFERENCES auth_user (id) ON DELETE CASCADE,
+    modified_on DATETIME,
+    modified_by INT  , INDEX modified_by__idx (modified_by), FOREIGN KEY (modified_by) REFERENCES auth_user (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2016-01-20T12:11:34.486000
+CREATE TABLE contenitori(
+    id INT AUTO_INCREMENT NOT NULL,
+    contenitore VARCHAR(512),
+    immagine VARCHAR(512),
+    id_unitaoperativa INT  , INDEX id_unitaoperativa__idx (id_unitaoperativa), FOREIGN KEY (id_unitaoperativa) REFERENCES unitaoperativa (id) ON DELETE CASCADE,
+    is_active CHAR(1),
+    created_on DATETIME,
+    created_by INT  , INDEX created_by__idx (created_by), FOREIGN KEY (created_by) REFERENCES auth_user (id) ON DELETE CASCADE,
+    modified_on DATETIME,
+    modified_by INT  , INDEX modified_by__idx (modified_by), FOREIGN KEY (modified_by) REFERENCES auth_user (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2016-01-20T12:11:34.671000
+CREATE TABLE settori(
+    id INT AUTO_INCREMENT NOT NULL,
+    settore VARCHAR(512),
+    responsabile VARCHAR(512),
+    sos_responsabile VARCHAR(512),
+    telefono VARCHAR(512),
+    mail VARCHAR(512),
+    id_unitaoperativa INT  , INDEX id_unitaoperativa__idx (id_unitaoperativa), FOREIGN KEY (id_unitaoperativa) REFERENCES unitaoperativa (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2016-01-20T12:11:34.920000
+CREATE TABLE esami(
+    id INT AUTO_INCREMENT NOT NULL,
+    analita VARCHAR(512),
+    search_keywords VARCHAR(512),
+    attivo CHAR(1),
+    id_unitaoperativa INT  , INDEX id_unitaoperativa__idx (id_unitaoperativa), FOREIGN KEY (id_unitaoperativa) REFERENCES unitaoperativa (id) ON DELETE CASCADE,
+    id_materiali INT  , INDEX id_materiali__idx (id_materiali), FOREIGN KEY (id_materiali) REFERENCES materiali (id) ON DELETE CASCADE,
+    id_contenitore INT  , INDEX id_contenitore__idx (id_contenitore), FOREIGN KEY (id_contenitore) REFERENCES contenitori (id) ON DELETE CASCADE,
+    id_metodo INT  , INDEX id_metodo__idx (id_metodo), FOREIGN KEY (id_metodo) REFERENCES metodi (id) ON DELETE CASCADE,
+    id_settore INT  , INDEX id_settore__idx (id_settore), FOREIGN KEY (id_settore) REFERENCES settori (id) ON DELETE CASCADE,
+    codice_metafora VARCHAR(512),
+    codice_DM VARCHAR(512),
+    tariffa_DM VARCHAR(512),
+    eseguibile_urgenza CHAR(1),
+    eseguibile_routine CHAR(1),
+    eseguibile_esterni CHAR(1),
+    prenotazione CHAR(1),
+    service CHAR(1),
+    obsoleto CHAR(1),
+    preparazione_paziente LONGTEXT,
+    moduli_richiesta VARCHAR(512),
+    raccolta LONGTEXT,
+    volume_minimo VARCHAR(512),
+    trasporto LONGTEXT,
+    unita_misura VARCHAR(512),
+    riferimento LONGTEXT,
+    interpretazione LONGTEXT,
+    interferenze LONGTEXT,
+    giorni_effettuazione VARCHAR(512),
+    udm_tempo_attesa VARCHAR(512),
+    tempo_refertazione VARCHAR(512),
+    tempo_refertazione_urgenza VARCHAR(512),
+    conservazione LONGTEXT,
+    veq LONGTEXT,
+    note LONGTEXT,
+    numero_revisione VARCHAR(512),
+    is_active CHAR(1),
+    created_on DATETIME,
+    created_by INT  , INDEX created_by__idx (created_by), FOREIGN KEY (created_by) REFERENCES auth_user (id) ON DELETE CASCADE,
+    modified_on DATETIME,
+    modified_by INT  , INDEX modified_by__idx (modified_by), FOREIGN KEY (modified_by) REFERENCES auth_user (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+timestamp: 2016-01-20T12:11:35.169000
+CREATE TABLE cfg_gen(
+    id INT AUTO_INCREMENT NOT NULL,
+    funct VARCHAR(255),
+    valore LONGTEXT,
+    description LONGTEXT,
+    is_active CHAR(1),
+    created_on DATETIME,
+    created_by INT  , INDEX created_by__idx (created_by), FOREIGN KEY (created_by) REFERENCES auth_user (id) ON DELETE CASCADE,
+    modified_on DATETIME,
+    modified_by INT  , INDEX modified_by__idx (modified_by), FOREIGN KEY (modified_by) REFERENCES auth_user (id) ON DELETE CASCADE,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB CHARACTER SET utf8;
+success!
+success!
+success!
+timestamp: 2016-08-18T08:32:27.957000
+CREATE TABLE unitaoperativa(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    descrizione CHAR(255),
+    responsabile CHAR(512)
+);
+success!
+timestamp: 2016-08-18T08:32:28.148000
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    username CHAR(128),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512),
+    id_unitaoperativa INTEGER REFERENCES unitaoperativa (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-08-18T08:32:28.280000
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT,
+    id_unitaoperativa INTEGER REFERENCES unitaoperativa (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-08-18T08:32:28.366000
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-08-18T08:32:28.430000
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  ,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2016-08-18T08:32:28.502000
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2016-08-18T08:32:28.555000
+CREATE TABLE auth_cas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    created_on TIMESTAMP,
+    service CHAR(512),
+    ticket CHAR(512),
+    renew CHAR(1)
+);
+success!
+timestamp: 2016-08-18T08:32:28.610000
+CREATE TABLE local_file(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    file_name CHAR(512),
+    description TEXT,
+    funct CHAR(512),
+    enabled CHAR(1),
+    tipo TEXT
+);
+success!
+timestamp: 2016-08-18T08:32:28.665000
+CREATE TABLE materiali(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    materiale CHAR(512),
+    sigla CHAR(512),
+    id_unitaoperativa INTEGER REFERENCES unitaoperativa (id) ON DELETE CASCADE  ,
+    is_active CHAR(1),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    modified_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-08-18T08:32:28.723000
+CREATE TABLE metodi(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    metodo CHAR(512),
+    id_unitaoperativa INTEGER REFERENCES unitaoperativa (id) ON DELETE CASCADE  ,
+    is_active CHAR(1),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    modified_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-08-18T08:32:28.778000
+CREATE TABLE contenitori(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    contenitore CHAR(512),
+    immagine CHAR(512),
+    id_unitaoperativa INTEGER REFERENCES unitaoperativa (id) ON DELETE CASCADE  ,
+    is_active CHAR(1),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    modified_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-08-18T08:32:28.830000
+CREATE TABLE settori(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    settore CHAR(512),
+    responsabile CHAR(512),
+    sos_responsabile CHAR(512),
+    telefono CHAR(512),
+    mail CHAR(512),
+    id_unitaoperativa INTEGER REFERENCES unitaoperativa (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-08-18T08:32:28.889000
+CREATE TABLE esami(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    analita CHAR(512),
+    search_keywords CHAR(512),
+    attivo CHAR(1),
+    id_unitaoperativa INTEGER REFERENCES unitaoperativa (id) ON DELETE CASCADE  ,
+    id_materiali INTEGER REFERENCES materiali (id) ON DELETE CASCADE  ,
+    id_contenitore INTEGER REFERENCES contenitori (id) ON DELETE CASCADE  ,
+    id_metodo INTEGER REFERENCES metodi (id) ON DELETE CASCADE  ,
+    id_settore INTEGER REFERENCES settori (id) ON DELETE CASCADE  ,
+    codice_metafora CHAR(512),
+    codice_DM CHAR(512),
+    tariffa_DM CHAR(512),
+    eseguibile_urgenza CHAR(1),
+    eseguibile_routine CHAR(1),
+    eseguibile_esterni CHAR(1),
+    prenotazione CHAR(1),
+    service CHAR(1),
+    obsoleto CHAR(1),
+    preparazione_paziente TEXT,
+    moduli_richiesta CHAR(512),
+    raccolta TEXT,
+    volume_minimo CHAR(512),
+    trasporto TEXT,
+    unita_misura CHAR(512),
+    riferimento TEXT,
+    interpretazione TEXT,
+    interferenze TEXT,
+    giorni_effettuazione CHAR(512),
+    udm_tempo_attesa CHAR(512),
+    tempo_refertazione CHAR(512),
+    tempo_refertazione_urgenza CHAR(512),
+    conservazione TEXT,
+    veq TEXT,
+    note TEXT,
+    numero_revisione CHAR(512),
+    is_active CHAR(1),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    modified_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-08-18T08:32:28.969000
+CREATE TABLE cfg_gen(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    funct CHAR(255),
+    valore TEXT,
+    description TEXT,
+    is_active CHAR(1),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    modified_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  
+);
+success!

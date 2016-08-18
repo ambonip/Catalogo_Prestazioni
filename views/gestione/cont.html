@@ -1,0 +1,16 @@
+{{response.title=BR()+'Catalogo delle prestazioni'}}
+{{response.subtitle=BR()+'Gestione dei Contenitori'}}
+{{response.theme=URL('static','css/bootstrap.min.simplex.css')}}
+{{extend 'layout.html'}}
+{{block header}}
+     <header class="well well-sm ">
+      <div class="text-center">
+        {{if response.title:}}
+        <h2>{{=response.title}}
+          <small>{{=response.subtitle or ''}}</small></h2>
+        {{pass}}
+      </div>
+    </header>
+{{end}}
+
+{{=grid}}

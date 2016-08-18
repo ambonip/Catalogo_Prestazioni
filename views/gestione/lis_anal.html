@@ -1,0 +1,27 @@
+{{response.title='Catalogo delle prestazioni'}}
+{{response.subtitle=BR()+'Gestione delle analisi'}}
+{{response.theme=URL('static','css/bootstrap.min.simplex.css')}}
+{{extend 'layout.html'}}
+<script type="text/javascript" src="{{=URL('static','/js/tinymce/tinymce.min.js')}}"></script>
+<script>tinymce.init({selector:'textarea',
+    plugins: [
+        "advlist autolink lists link image charmap print preview anchor",
+        "searchreplace visualblocks code fullscreen",
+        "insertdatetime media table contextmenu paste"],
+    toolbar:
+    "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent "
+        });
+</script>
+
+
+{{block header}}
+     <header class="well well-sm ">
+      <div class="text-center">
+        {{if response.title:}}
+        <h2>{{=response.title}}
+          <small>{{=response.subtitle or ''}}</small></h2>
+        {{pass}}
+      </div>
+    </header>
+{{end}}
+{{=grid}}
