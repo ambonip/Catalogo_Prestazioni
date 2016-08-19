@@ -655,3 +655,184 @@ CREATE TABLE cfg_gen(
     modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  
 );
 success!
+timestamp: 2016-08-19T09:59:49.595000
+CREATE TABLE unitaoperativa(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    descrizione CHAR(255),
+    responsabile CHAR(512)
+);
+success!
+timestamp: 2016-08-19T09:59:49.800000
+CREATE TABLE auth_user(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    first_name CHAR(128),
+    last_name CHAR(128),
+    email CHAR(512),
+    username CHAR(128),
+    password CHAR(512),
+    registration_key CHAR(512),
+    reset_password_key CHAR(512),
+    registration_id CHAR(512),
+    id_unitaoperativa INTEGER REFERENCES unitaoperativa (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-08-19T09:59:49.887000
+CREATE TABLE auth_group(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    role CHAR(512),
+    description TEXT,
+    id_unitaoperativa INTEGER REFERENCES unitaoperativa (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-08-19T09:59:49.965000
+CREATE TABLE auth_membership(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-08-19T09:59:50.176000
+CREATE TABLE auth_permission(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    group_id INTEGER REFERENCES auth_group (id) ON DELETE CASCADE  ,
+    name CHAR(512),
+    table_name CHAR(512),
+    record_id INTEGER
+);
+success!
+timestamp: 2016-08-19T09:59:50.301000
+CREATE TABLE auth_event(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    time_stamp TIMESTAMP,
+    client_ip CHAR(512),
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    origin CHAR(512),
+    description TEXT
+);
+success!
+timestamp: 2016-08-19T09:59:50.392000
+CREATE TABLE auth_cas(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    created_on TIMESTAMP,
+    service CHAR(512),
+    ticket CHAR(512),
+    renew CHAR(1)
+);
+success!
+timestamp: 2016-08-19T09:59:50.452000
+CREATE TABLE local_file(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    file_name CHAR(512),
+    description TEXT,
+    funct CHAR(512),
+    enabled CHAR(1),
+    tipo TEXT
+);
+success!
+timestamp: 2016-08-19T09:59:50.508000
+CREATE TABLE materiali(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    materiale CHAR(512),
+    sigla CHAR(512),
+    id_unitaoperativa INTEGER REFERENCES unitaoperativa (id) ON DELETE CASCADE  ,
+    is_active CHAR(1),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    modified_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-08-19T09:59:50.573000
+CREATE TABLE metodi(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    metodo CHAR(512),
+    id_unitaoperativa INTEGER REFERENCES unitaoperativa (id) ON DELETE CASCADE  ,
+    is_active CHAR(1),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    modified_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-08-19T09:59:50.629000
+CREATE TABLE contenitori(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    contenitore CHAR(512),
+    immagine CHAR(512),
+    id_unitaoperativa INTEGER REFERENCES unitaoperativa (id) ON DELETE CASCADE  ,
+    is_active CHAR(1),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    modified_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-08-19T09:59:50.689000
+CREATE TABLE settori(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    settore CHAR(512),
+    responsabile CHAR(512),
+    sos_responsabile CHAR(512),
+    telefono CHAR(512),
+    mail CHAR(512),
+    id_unitaoperativa INTEGER REFERENCES unitaoperativa (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-08-19T09:59:50.746000
+CREATE TABLE esami(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    analita CHAR(512),
+    search_keywords CHAR(512),
+    attivo CHAR(1),
+    id_unitaoperativa INTEGER REFERENCES unitaoperativa (id) ON DELETE CASCADE  ,
+    id_materiali INTEGER REFERENCES materiali (id) ON DELETE CASCADE  ,
+    id_contenitore INTEGER REFERENCES contenitori (id) ON DELETE CASCADE  ,
+    id_metodo INTEGER REFERENCES metodi (id) ON DELETE CASCADE  ,
+    id_settore INTEGER REFERENCES settori (id) ON DELETE CASCADE  ,
+    codice_metafora CHAR(512),
+    codice_DM CHAR(512),
+    tariffa_DM CHAR(512),
+    eseguibile_urgenza CHAR(1),
+    eseguibile_routine CHAR(1),
+    eseguibile_esterni CHAR(1),
+    prenotazione CHAR(1),
+    service CHAR(1),
+    obsoleto CHAR(1),
+    preparazione_paziente TEXT,
+    moduli_richiesta CHAR(512),
+    raccolta TEXT,
+    volume_minimo CHAR(512),
+    trasporto TEXT,
+    unita_misura CHAR(512),
+    riferimento TEXT,
+    interpretazione TEXT,
+    interferenze TEXT,
+    giorni_effettuazione CHAR(512),
+    udm_tempo_attesa CHAR(512),
+    tempo_refertazione CHAR(512),
+    tempo_refertazione_urgenza CHAR(512),
+    conservazione TEXT,
+    veq TEXT,
+    note TEXT,
+    numero_revisione CHAR(512),
+    is_active CHAR(1),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    modified_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  
+);
+success!
+timestamp: 2016-08-19T09:59:50.801000
+CREATE TABLE cfg_gen(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    funct CHAR(255),
+    valore TEXT,
+    description TEXT,
+    is_active CHAR(1),
+    created_on TIMESTAMP,
+    created_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  ,
+    modified_on TIMESTAMP,
+    modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  
+);
+success!
