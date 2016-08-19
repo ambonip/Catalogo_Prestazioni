@@ -324,6 +324,7 @@
 'User ID': 'ID Utente',
 'Username': 'Nome utente',
 'Users': 'Utenti',
+'Valore': 'Valore',
 'Valori di riferimento': 'Valori di riferimento',
 'value already in database or empty': 'valore già presente nel database o vuoto',
 'Value not in database': 'Valore non nel database',
