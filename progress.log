@@ -13,3 +13,4 @@
 [2016-01-28 10:12:54] CREATE default/scheda_esami.html: 0
 [2016-08-04 13:22:20] EDIT test_catalog/models/db.py: 0
 [2016-08-04 13:22:25] EDIT test_catalog/models/db.py: 0
+[2016-08-30 09:42:47] EDIT Catalogo_Prestazioni/views/default/view_container.html: 2

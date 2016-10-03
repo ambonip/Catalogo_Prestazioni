@@ -1,0 +1,17 @@
+{{extend 'layout.html'}}
+
+<div class="container-fluid well">
+
+    <div class="panel panel-danger">
+            <div class="panel-heading"><strong>Descrizione del contenitore</strong></div>
+             <div class="panel-body">
+                 <p>{{=cont.contenitore}}</p>
+
+             </div>
+        </div>
+
+</div >
+<div>
+
+ <img  src="{{=URL('download', args=cont.immagine)}}" class="img-thumbnail" />
+</div>

@@ -85,7 +85,7 @@ def ges_user():
 # Tests managemnt
 
 @auth.requires_login()  # todo
-def lis_anal():  # anlites list to edit
+def lis_anal():  # analites list to edit
     db.esami._common_filter = lambda query0: db.esami.id_unitaoperativa == auth.user.id_unitaoperativa
     db.materiali._common_filter = lambda query1: db.materiali.id_unitaoperativa == auth.user.id_unitaoperativa
     db.settori._common_filter = lambda query2: db.settori.id_unitaoperativa == auth.user.id_unitaoperativa

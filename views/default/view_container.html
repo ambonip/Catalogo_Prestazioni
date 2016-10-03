@@ -12,6 +12,7 @@
 
 </div >
 <div>
-
+{{if cont.immagine==True:}}
  <img  src="{{=URL('download', args=cont.immagine)}}" class="img-thumbnail" />
+{{pass}}
 </div>
