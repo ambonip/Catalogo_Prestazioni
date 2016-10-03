@@ -54,7 +54,7 @@
     <tr><td>Materiale</td><td>{{=mat.materiale}}</td></tr>
     <tr><td>Contenitore</td><td>{{=cont.contenitore}}</td></tr>
     <tr><td>Metodo di esecuzione</td><td>{{=met.metodo}}</td></tr>
-    <tr><td>Settore di appartenenza</td><td>{{=sett.settore}}</td></tr>
+    <tr><td>Settore di appartenenza</td><td>{{if sett.settore:}}{{=sett.settore}}{{pass}}</td></tr>
     <tr><td>Esegibile in urgenza</td><td>{{if anal.eseguibile_urgenza:}}si{{else:}}no{{pass}}</td></tr>
     <tr><td>Eseguibile in routine</td><td>{{if anal.eseguibile_routine:}}si{{else:}}no{{pass}}</td></tr>
     <tr><td>Eseguibile per pazienti esterni</td><td>{{if anal.eseguibile_esterni:}}si{{else:}}no{{pass}}</td></tr>
