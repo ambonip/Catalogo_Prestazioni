@@ -122,7 +122,6 @@ def lis_anal():  # analites list to edit
         'unita_misura',
         'trasporto',
         #----------------------
-        'unita_misura',
         'riferimento',
         'interpretazione',
         'interferenze',
