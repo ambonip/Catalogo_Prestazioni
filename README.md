@@ -1,6 +1,6 @@
 # test_catalog
 App web2py per la gestione del Catalogo delle Prestazioni in Laboratorio
-Database utilizzato mysql
+Database utilizzato mysql - sqlite
 Versione python 2.7.x
 Bootstrap 3
 JQuery
