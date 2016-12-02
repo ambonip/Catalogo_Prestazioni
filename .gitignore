@@ -1,1 +1,6 @@
 private/
+cache/
+databases/
+sessions/
+errors/
+Catalogo_prestazioni/
