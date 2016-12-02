@@ -37,12 +37,17 @@ sub_conf=[('Gestione Materiali',False,URL('gestione','mat')),
           ('Gestione settori',False,URL('gestione','sett')),
           ('Gestione analisi',False,URL('gestione','lis_anal')),
          ]
+#costruisco submenu per esportazione liste
+sub_export=[('esporta analisi',False,URL('gestione','axp_anal')),
+            ('esporta contenitori',False,URL('gestione','axp_cont')),]
+
 if auth.has_membership('superuser'):#aggiungo gestione unità operative solo per superuser
     sub_conf.append(('Unità operative',False,URL('gestione','unop')))
     sub_conf.append(('Configurazione generale',False,URL('gestione','gen_cfg')))
     response.menu+=[('Gestione utenti',False,URL('gestione','ges_user',[]))]
 if auth.is_logged_in():
     response.menu+=[('Cofigurazione',False,'#',sub_conf)]#al menu configurzione aggancio il submenu preparato prima
+    response.menu+=[('Esporta',False,'#',sub_export)]#al menu configurzione aggancio il submenu preparato prima
 
 #########################################################################
 ## provide shortcuts for development. remove in production
