@@ -38,8 +38,11 @@ sub_conf=[('Gestione Materiali',False,URL('gestione','mat')),
           ('Gestione analisi',False,URL('gestione','lis_anal')),
          ]
 #costruisco submenu per esportazione liste
-sub_export=[('esporta analisi',False,URL('gestione','axp_anal')),
-            ('esporta contenitori',False,URL('gestione','axp_cont')),]
+sub_export=[('esporta analisi',False,URL('gestione','exp_anal')),
+            ('esporta contenitori',False,URL('gestione','exp_cont')),
+            ('esporta metodi',False,URL('gestione','exp_meto')),
+            ('esporta materiali',False,URL('gestione','exp_mate')),
+            ]
 
 if auth.has_membership('superuser'):#aggiungo gestione unità operative solo per superuser
     sub_conf.append(('Unità operative',False,URL('gestione','unop')))
