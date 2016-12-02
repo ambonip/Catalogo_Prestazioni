@@ -31,6 +31,25 @@ def analisi_filtrate():
                         maxtextlength=lunghezza, csv=False)
     return dict(lista=grid)
 
+@auth.requires_login()
+def exp_anal():
+    grid=SQLFORM.grid(db.esami,deletable=False,details=False,editable=False,create=False,paginate = 10)
+    return locals()
+
+@auth.requires_login()
+def exp_cont():
+    grid=SQLFORM.grid(db.contenitori,deletable=False,details=False,editable=False,create=False,paginate = 10)
+    return locals()
+
+@auth.requires_login()
+def exp_mate():
+    grid=SQLFORM.grid(db.materiali,deletable=False,details=False,editable=False,create=False,paginate = 10)
+    return locals()
+
+@auth.requires_login()
+def exp_meto():
+    grid=SQLFORM.grid(db.metodi,deletable=False,details=False,editable=False,create=False,paginate = 10)
+    return locals()
 
 @auth.requires_membership('superuser')
 def unop():  # department managment
