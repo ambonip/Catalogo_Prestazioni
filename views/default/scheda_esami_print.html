@@ -74,7 +74,7 @@
     <tr><td>Tempo di refertazione in urgenza</td><td>{{=anal.tempo_refertazione_urgenza}} min.</td></tr>
 {{pass}}
 {{if anal.giorni_effettuazione:}}
-    <tr><td>Frequenza di esecuzione: </td><td>{{=anal.giorni_effettuazione}}</td></tr>
+    <tr><td>Giorni di esecuzione: </td><td>{{=anal.giorni_effettuazione}}</td></tr>
 {{pass}}
     <tr><td>Interferenze</td><td>{{=XML(anal.interferenze, sanitize=False)}}</td></tr>
 {{if anal.volume_minimo:}}
