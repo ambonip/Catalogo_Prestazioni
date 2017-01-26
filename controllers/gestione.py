@@ -60,8 +60,17 @@ def exp_cont():
 
 
 def exp_mate():
-    grid=SQLFORM.grid(db.materiali,deletable=False,details=False,editable=False,create=False,paginate = 10)
-    return locals()
+    import StringIO
+    s=StringIO.StringIO()
+    rows=db().select(db.materiali.id,db.materiali.sigla,db.materiali.materiale)
+    rows.export_to_csv_file(s,delimiter=';',quotechar='"',represent=True)
+    response.headers['Content-Type'] = 'text/csv'
+    response.headers['Content-Disposition'] = 'attachment; filename = Materiali.csv '
+    response.headers['Content-Title'] = 'Materiali.csv'
+
+    return s.getvalue()
+    #grid=SQLFORM.grid(db.materiali,deletable=False,details=False,editable=False,create=False,paginate = 10)
+    #return locals()
 
 
 def exp_meto():
