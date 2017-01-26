@@ -31,22 +31,39 @@ def analisi_filtrate():
                         maxtextlength=lunghezza, csv=False)
     return dict(lista=grid)
 
-@auth.requires_login()
+
 def exp_anal():
-    grid=SQLFORM.grid(db.esami,deletable=False,details=False,editable=False,create=False,paginate = 10)
+    grid=SQLFORM.grid(db.esami,deletable=False,details=False,editable=False,create=False,paginate = 10,
+                      fields=(db.esami.id_materiali,
+                              db.esami.analita,
+                              db.esami.id_contenitore,
+                              db.esami.id_unitaoperativa,
+                              db.esami.obsoleto,
+                              db.esami.attivo,
+                              db.esami.id_metodo,
+                              db.esami.id_settore,
+                              db.esami.codice_DM,
+                              db.esami.eseguibile_urgenza,
+                              db.esami.eseguibile_routine,
+                              db.esami.eseguibile_esterni,
+                              )
+                      )
     return locals()
 
-@auth.requires_login()
+
 def exp_cont():
-    grid=SQLFORM.grid(db.contenitori,deletable=False,details=False,editable=False,create=False,paginate = 10)
+    grid=SQLFORM.grid(db.contenitori,deletable=False,details=False,editable=False,create=False,paginate = 10,
+                      fields=(db.contenitori.contenitore,
+                              db.contenitori.id_unitaoperativa)
+                      )
     return locals()
 
-@auth.requires_login()
+
 def exp_mate():
     grid=SQLFORM.grid(db.materiali,deletable=False,details=False,editable=False,create=False,paginate = 10)
     return locals()
 
-@auth.requires_login()
+
 def exp_meto():
     grid=SQLFORM.grid(db.metodi,deletable=False,details=False,editable=False,create=False,paginate = 10)
     return locals()
