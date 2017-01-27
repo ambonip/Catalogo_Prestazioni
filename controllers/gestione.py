@@ -33,8 +33,9 @@ def analisi_filtrate():
 
 
 def exp_anal():
-    grid=SQLFORM.grid(db.esami,deletable=False,details=False,editable=False,create=False,paginate = 10,
-                      fields=(db.esami.id_materiali,
+    import StringIO
+    s = StringIO.StringIO()
+    rows = db().select(db.esami.id_materiali,
                               db.esami.analita,
                               db.esami.id_contenitore,
                               db.esami.id_unitaoperativa,
@@ -45,28 +46,46 @@ def exp_anal():
                               db.esami.codice_DM,
                               db.esami.eseguibile_urgenza,
                               db.esami.eseguibile_routine,
-                              db.esami.eseguibile_esterni,
-                              )
-                      )
-    return locals()
-
+                              db.esami.eseguibile_esterni,)
+    rows.export_to_csv_file(s, delimiter=';', quotechar='"', represent=True)
+    response.headers['Content-Type'] = 'text/csv'
+    response.headers['Content-Disposition'] = 'attachment; filename = Esami.csv '
+    response.headers['Content-Title'] = 'Esami.csv'
+    return s.getvalue()
 
 def exp_cont():
-    grid=SQLFORM.grid(db.contenitori,deletable=False,details=False,editable=False,create=False,paginate = 10,
-                      fields=(db.contenitori.contenitore,
-                              db.contenitori.id_unitaoperativa)
-                      )
-    return locals()
+    import StringIO
+    s = StringIO.StringIO()
+    rows = db().select(db.contenitori.contenitore,
+                       db.contenitori.id_unitaoperativa)
+    rows.export_to_csv_file(s, delimiter=';', quotechar='"', represent=True)
+    response.headers['Content-Type'] = 'text/csv'
+    response.headers['Content-Disposition'] = 'attachment; filename = Contenitori.csv '
+    response.headers['Content-Title'] = 'Contenitori.csv'
+    return s.getvalue()
 
 
 def exp_mate():
-    grid=SQLFORM.grid(db.materiali,deletable=False,details=False,editable=False,create=False,paginate = 10)
-    return locals()
-
+    import StringIO
+    s=StringIO.StringIO()
+    rows=db().select(db.materiali.id,
+                     db.materiali.sigla,
+                     db.materiali.materiale)
+    rows.export_to_csv_file(s,delimiter=';',quotechar='"',represent=True)
+    response.headers['Content-Type'] = 'text/csv'
+    response.headers['Content-Disposition'] = 'attachment; filename = Materiali.csv '
+    response.headers['Content-Title'] = 'Materiali.csv'
+    return s.getvalue()
 
 def exp_meto():
-    grid=SQLFORM.grid(db.metodi,deletable=False,details=False,editable=False,create=False,paginate = 10)
-    return locals()
+    import StringIO
+    s = StringIO.StringIO()
+    rows = db().select(db.metodi.metodo,db.metodi.id_unitaoperativa)
+    rows.export_to_csv_file(s, delimiter=';', quotechar='"', represent=True)
+    response.headers['Content-Type'] = 'text/csv'
+    response.headers['Content-Disposition'] = 'attachment; filename = Metodi.csv '
+    response.headers['Content-Title'] = 'Metodi.csv'
+    return s.getvalue()
 
 @auth.requires_membership('superuser')
 def unop():  # department managment
