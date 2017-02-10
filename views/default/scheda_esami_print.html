@@ -59,7 +59,7 @@
     <tr><td>Eseguibile in routine</td><td>{{if anal.eseguibile_routine:}}si{{else:}}no{{pass}}</td></tr>
     <tr><td>Eseguibile per pazienti esterni</td><td>{{if anal.eseguibile_esterni:}}si{{else:}}no{{pass}}</td></tr>
     <tr><td>Prenotazione necessaria</td><td>{{if anal.prenotazione:}}si{{else:}}no{{pass}}</td></tr>
-    <tr><td>Prestazione eseguita in service</td><td>{{if anal.service:}}si{{else:}}no{{pass}}</td></tr>
+    <tr><td>Eseguita in service presso altro ente</td><td>{{if anal.service:}}si{{else:}}no{{pass}}</td></tr>
     <tr><td>Preparazione del paziente</td><td>{{=XML(anal.preparazione_paziente, sanitize=False)}}</td></tr>
     <tr><td>Modalità di raccolta</td><td>{{=XML(anal.raccolta, sanitize=False)}}</td></tr>
  {{if anal.trasporto:}}
@@ -89,9 +89,7 @@
     <tr><td>Note:</td><td>{{=XML(anal.note)}}</td></tr>
 {{pass}}
 </table>
-
-<p style="page-break-after:always;"></p>
-
+ <!--<p style="page-break-after:always;"></p>-->
 <div class="well-sm">
     <div class="row">Valori di riferimento</div>
     <div class="row">{{=XML(anal.riferimento, sanitize=False)}}</div>

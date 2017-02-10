@@ -9,8 +9,19 @@
 
              </div>
         </div>
+    <div>
+    {{if cont.nota:}}
+    Nota: {{=cont.nota}}
+    {{pass}}
+</div>
+<div>
+    {{if cont.cod_ord:}}
+    Codice Magazzino: {{=cont.cod_ord}}
+    {{pass}}
+</div>
 
 </div >
+
 <div>
 {{if cont.immagine==True:}}
  <img  src="{{=URL('download', args=cont.immagine)}}" class="img-thumbnail" />

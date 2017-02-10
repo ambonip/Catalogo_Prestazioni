@@ -836,3 +836,8 @@ CREATE TABLE cfg_gen(
     modified_by INTEGER REFERENCES auth_user (id) ON DELETE CASCADE  
 );
 success!
+timestamp: 2017-02-10T13:57:58.421000
+ALTER TABLE contenitori ADD cod_ord CHAR(512);
+timestamp: 2017-02-10T13:57:58.710000
+ALTER TABLE contenitori ADD nota TEXT;
+success!

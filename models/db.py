@@ -131,6 +131,8 @@ db.metodi.metodo.requres=IS_NOT_EMPTY()
 #Containers
 db.define_table('contenitori',
                 Field('contenitore',required=True, label=T('Container')),
+                Field('nota','text',label='nota'),
+                Field('cod_ord',label='Codice magazzino'),
                 Field('immagine','upload',autodelete=True, label=T('Image')),
                 Field('id_unitaoperativa','reference unitaoperativa'),
                 auth.signature,

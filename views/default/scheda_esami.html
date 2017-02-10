@@ -57,6 +57,9 @@
              <div class="panel-body">
                  {{=T('Sample material')}}: {{=mat.materiale}}<br>
                  {{=T('Container')}}: {{=cont.contenitore}} - {{=A('Dettaglio', _href=URL('view_container',args=cont.id))}}
+                 {{if anal.volume_minimo:}}
+                 <br> Volume minimo per l'esecuzione: {{=anal.volume_minimo}}
+                 {{pass}}
 
              </div>
         </div>
@@ -64,9 +67,11 @@
 
   <div class="col-md-4">
         <div class="panel panel-info">
-            <div class="panel-heading">Preparazione del paziente</div>
+            <div class="panel-heading">Preparazione del paziente - raccolta campione</div>
              <div class="panel-body">
-             {{=XML(anal.preparazione_paziente, sanitize=False)}}
+             {{if anal.preparazione_paziente:}}
+                 <p>Preparazione del paziente:  {{=XML(anal.preparazione_paziente, sanitize=False)}}</p>
+             {{pass}}
              {{if anal.raccolta:}}
                     <p>Modalità di raccolta: {{=XML(anal.raccolta, sanitize=False)}}</p>
                 {{pass}}
@@ -130,7 +135,7 @@
       <br>Eseguibile in routine: {{if anal.eseguibile_routine:}}si{{else:}}no{{pass}}
       <br>Eseguibile per pazienti esterni: {{if anal.eseguibile_esterni:}}si{{else:}}no{{pass}}
       <br>Necessaria la prenotazione: {{if anal.prenotazione:}}si{{else:}}no{{pass}}
-      <br>Eseguito in service: {{if anal.service:}}si{{else:}}no{{pass}}
+      <br>Eseguito in service presso altro ente: {{if anal.service:}}si{{else:}}no{{pass}}
       <br> Tempo di refertazione in routine: {{=anal.tempo_refertazione}} {{=anal.udm_tempo_attesa}}
       {{if anal.eseguibile_urgenza:}}
         <br> Tempo di refertazione in urgenza: {{=anal.tempo_refertazione_urgenza}} min.
