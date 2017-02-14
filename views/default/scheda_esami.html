@@ -7,6 +7,8 @@
 {{if anal.attivo==True:}}
         <a href="{{=URL('default', 'scheda_esami_print', args=[anal.id])}}" target="_blank">versione stampabile</a>
         <span class="glyphicon glyphicon-print" aria-hidden="true"></span></p></small>
+        <a href="{{=URL('default', 'scheda_esami_studi', args=[anal.id])}}" target="_blank">versione per studi clinici</a>
+
 {{pass}}
     </div>
     <div class="col-md-6 text-center">

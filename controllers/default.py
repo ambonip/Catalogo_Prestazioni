@@ -14,7 +14,8 @@ def index():
               requires=(IS_NOT_EMPTY(),
                         IS_LENGTH(minsize=3),
                         IS_SLUG(check=False, error_message='non deve contenere spazi o caratteri particolari'))),
-        submit_button='cerca prestazione'
+        submit_button='cerca prestazione',
+        formname='cerca_pres'
     )
     if form.process().accepted:
         redirect(URL('default', 'analisi_filtrate', vars=form.vars))
@@ -100,6 +101,16 @@ def scheda_esami():
     return dict(anal=anal, mat=mat, met=met, sett=sett, cont=cont, uo=uo)
 
 def scheda_esami_print():
+    id_esame = request.args(0)
+    anal = db.esami[id_esame]
+    mat = db.materiali[anal.id_materiali]
+    met = db.metodi[anal.id_metodo]
+    sett = db.settori[anal.id_settore]
+    cont = db.contenitori[anal.id_contenitore]
+    uo = db.unitaoperativa[anal.id_unitaoperativa]
+    return dict(anal=anal, mat=mat, met=met, sett=sett, cont=cont, uo=uo)
+
+def scheda_esami_studi():
     id_esame = request.args(0)
     anal = db.esami[id_esame]
     mat = db.materiali[anal.id_materiali]
