@@ -36,6 +36,7 @@ sub_conf=[('Gestione Materiali',False,URL('gestione','mat')),
           ('Gestione metodi',False,URL('gestione','metod')),
           ('Gestione settori',False,URL('gestione','sett')),
           ('Gestione analisi',False,URL('gestione','lis_anal')),
+          ('Download catalogo Offline',False,URL('static','catalogo_prestazioni.zip')),
          ]
 #costruisco submenu per esportazione liste
 sub_export=[('esporta analisi sintetico -> CSV',False,URL('gestione','exp_anal')),
@@ -48,6 +49,7 @@ if auth.has_membership('superuser'):#aggiungo gestione unità operative solo per
     sub_conf.append(('Unità operative',False,URL('gestione','unop')))
     sub_conf.append(('Configurazione generale',False,URL('gestione','gen_cfg')))
     response.menu+=[('Gestione utenti',False,URL('gestione','ges_user',[]))]
+    response.menu += [('Aggiorna cataolog offline', False, URL('gestione', 'exp_catalog', []))]
 
 if auth.is_logged_in():#aggiungo i menù solo per utenti loggati
     response.menu+=[('Cofigurazione',False,'#',sub_conf)]#al menu configurzione aggancio il submenu preparato prima

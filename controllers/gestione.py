@@ -87,6 +87,41 @@ def exp_meto():
     response.headers['Content-Title'] = 'Metodi.csv'
     return s.getvalue()
 
+def exp_catalog():
+    import os
+    import re
+    import datetime
+    for row in db(db.esami.id > 0).select():
+        try:
+            id_esame =row.id
+            anal = db.esami[id_esame]
+            nome_esame=anal.analita
+            mat = db.materiali[anal.id_materiali]
+            sigla=mat.sigla
+            met = db.metodi[anal.id_metodo]
+            sett = db.settori[anal.id_settore]
+            cont = db.contenitori[anal.id_contenitore]
+            uo = db.unitaoperativa[anal.id_unitaoperativa]
+            nome_esame='{}_{}'.format(nome_esame,id_esame)
+            nome_esame = re.sub('[^\w_.)( -]', '', nome_esame)
+            #return dict(anal=anal, mat=mat, met=met, sett=sett, cont=cont, uo=uo)
+            nomefile = os.path.join(request.folder, 'static','catalogo_offline', '{}.html'.format(nome_esame))
+            testo=response.render('default/scheda_esami_offline.html',dict(anal=anal, mat=mat, met=met, sett=sett, cont=cont, uo=uo))
+            with open(nomefile,'w') as f:
+                f.write(testo)
+        except:
+            pass
+    import shutil
+    dir_compress=os.path.join(request.folder, 'static','catalogo_offline')
+    nome_archivio=os.path.join(request.folder, 'static','catalogo_prestazioni')
+    shutil.make_archive(nome_archivio,'zip',dir_compress)
+    #response.render('gestione/exp_catalog.html',dict(nome_archivio=nome_archivio))
+    session.flash = 'catalogo offile aggiornato correttamente'
+    redirect(URL('default','index'))
+    return ('<h1>Archivio aggiornato correttemente</h1>')
+
+
+
 @auth.requires_membership('superuser')
 def unop():  # department managment
     grid = SQLFORM.grid(db.unitaoperativa, deletable=False, maxtextlength={'unitaoperativa.descrizione': 60})
